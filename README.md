@@ -23,9 +23,11 @@ check_barrels.py is a utility script that evaluates beta barrel outputs from RF 
 `python ./check_barrels.py <pdblist - list of barrel design PDBs> <cylinders dir - directory where bb cylinder files exist>`
 
 ### Dependencies
-[PyRosetta](https://www.pyrosetta.org)
-[BBQ](https://biocomp.chem.uw.edu.pl/tools/bbq)
-[silent_tools](https://github.com/bcov77/silent_tools)
+PyRosetta [https://www.pyrosetta.org](https://www.pyrosetta.org)
+
+BBQ [https://biocomp.chem.uw.edu.pl/tools/bbq](https://biocomp.chem.uw.edu.pl/tools/bbq)
+
+silent_tools [https://github.com/bcov77/silent_tools](https://github.com/bcov77/silent_tools)
 
 ## Support
 Contact David Kim (dekim@uw.edu) for any questions.
