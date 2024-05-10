@@ -20,7 +20,7 @@ barrels.py is the main script that generates parameter defined barrel cylinders 
 
 check_barrels.py is a utility script that evaluates beta barrel outputs from RF partial diffusion and RFJoin2 inpainting to determine the extent of beta barrel formation.
 
-`python ./check_barrels.py <pdblist - list of barrel design PDBs> <cylinders dir - directory where bb cylinder files exist>`
+`python ./check_barrels.py <pdblist> <cylinders dir>`
 
 ### Dependencies
 PyRosetta [https://www.pyrosetta.org](https://www.pyrosetta.org)
