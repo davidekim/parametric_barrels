@@ -62,7 +62,7 @@ parser.add_argument('--looplen', action="store",default=4, required=False, type=
 parser.add_argument('--inpaint_template_conf', action="store",default=0.9, required=False, type=float,help="Template confidence for inpainting") 
 parser.add_argument('--diffusion_partial_T', action="store",default=10, required=False, type=int,help="Partial diffusion partial_T")
 parser.add_argument('--dtw', action="store", default=1.0, required=False, type=float,help="tilt angle ratio")
-parser.add_argument('--antiparallel', default="TRUE", action="store_true", required=False, help="Anti-parallel")
+parser.add_argument('--antiparallel', type=bool, default=True, action="store", required=False, help="Anti-parallel")
 args = parser.parse_args()
 
 a = args.a #Distance between consective C-alpha atoms within a strand
