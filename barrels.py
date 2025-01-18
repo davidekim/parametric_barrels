@@ -30,9 +30,6 @@ from math import sqrt,asin,pi,sin,tan,cos
 from scipy.optimize import fsolve
 import random
 import argparse
-from pyrosetta import *
-from pyrosetta.rosetta import *
-from rosetta.protocols.loops.loop_closure.ccd import *
 
 # Relevant parameter studies
 # Cyril F. Reboul, Khalid Mahmood, James C. Whisstock, Michelle A. Dunstone, Predicting
@@ -64,6 +61,14 @@ parser.add_argument('--diffusion_partial_T', action="store", default=20, require
 parser.add_argument('--dtw', action="store", default=1.0, required=False, type=float,help="tilt angle ratio")
 parser.add_argument('--antiparallel', type=bool, default=True, action="store", required=False, help="Anti-parallel")
 args = parser.parse_args()
+
+if len(sys.argv) < 2:
+    parser.print_usage()
+    sys.exit(1)
+
+from pyrosetta import *
+from pyrosetta.rosetta import *
+from pyrosetta.rosetta.protocols.loops.loop_closure.ccd import *
 
 a = args.a #Distance between consective C-alpha atoms within a strand
 b = args.b #Distance between C-alpha atoms of adjacent strands which forms hbonds
@@ -121,7 +126,7 @@ for i in range(len(coor)):
     if args.antiparallel and i%2 == 0: coor_strand.reverse() 
     for j in range(len(coor_strand)):
         (x,y,z,sign) = coor_strand[j]
-        foA.write("ATOM  %5d  CA  %3s %1s%4d    %8.3f%8.3f%8.3f  1.00  0.00           %1d\n" % (atomi,"ALA",'A',resi,x,y,z,sign))
+        foA.write("ATOM  %5d  CA  %3s %1s%4d    %8.3f%8.3f%8.3f  1.00  0.00           %1d\n" % (atomi,"VAL",'A',resi,x,y,z,sign))
         resi += 1	
         atomi += 4
     chaini += 1
