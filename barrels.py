@@ -134,10 +134,17 @@ foA.close()
 
 # Create backbone atoms and loops for inpainting and/or diffusion input
 # place backbone atoms w/ bbq
-os.system(f"source {RUN_BBQ_SH} "+outpdb)
-bbA = outpdb.split('.pdb')[0]+'-bb.pdb'
-prefix = bbA[0:-4]
+bbA = ''
+prefix = ''
+if os.system(f"source {RUN_BBQ_SH} "+outpdb) == 0:
+    bbA = outpdb.split('.pdb')[0]+'-bb.pdb'
+elif os.system(f"bash {RUN_BBQ_SH} "+outpdb) == 0:
+    bbA = outpdb.split('.pdb')[0]+'_rebuilt.pdb'
+if not os.path.exists(bbA):
+    print(f'Failed to create backbone using {RUN_BBQ_SH}')
+    sys.exit(1)
 
+prefix = bbA[0:-4]
 pose = pose_from_pdb(bbA)
 singlechain = Pose()
 for i in range(1, len(pose.sequence())+1):
