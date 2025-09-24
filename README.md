@@ -6,7 +6,7 @@
 This repo includes utility scripts to generate parametrically guided beta barrel protein backbone structures.
 
 ## Reference
-Kim, D.E. et al. Parametrically guided design of soluble beta barrels and transmembrane nanopores using deep learning. 2024
+D.E. Kim, J.L. Watson, D. Juergens, S. Majumder, R. Sonigra, S.R. Gerben, A. Kang, A.K. Bera, X. Li, & D. Baker, Parametrically guided design of beta barrels and transmembrane nanopores using deep learning, Proc. Natl. Acad. Sci. U.S.A. 122 (38) e2425459122, https://doi.org/10.1073/pnas.2425459122 (2025).
 
 ## Installation
 You can clone this repo into a preferred destination directory by going to that directory and then running:
