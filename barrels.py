@@ -16,10 +16,8 @@ from pathlib import Path
 home = str(Path.home())
 
 # EDIT THE FOLLOWING TO POINT TO YOUR SPECIFIC PATHS
-RUN_BBQ_SH = home+"/src/bioshell.bioinformatics-2.2/run_bbq.sh"
 INPAINT_PY = "/software/containers/SE3nv.sif "+home+"/src/proteininpainting/inpaint.py"
 RUN_INFERENCE_PY = "/software/containers/RF_diffusion.sif /projects/ml/rf_diffusion/run_inference.py"
-
 
 ##
 ##
@@ -30,6 +28,9 @@ from math import sqrt,asin,pi,sin,tan,cos
 from scipy.optimize import fsolve
 import random
 import argparse
+
+installdir = os.path.dirname(os.path.abspath(__file__))
+os.environ['CLASSPATH'] = f'{installdir}/bioshell.bioinformatics-2.2/bioshell.bioinformatics-2.2.jar:{installdir}/bioshell.bioinformatics-2.2/bioshell.bioinformatics-2.2-mono.jar'
 
 # Relevant parameter studies
 # Cyril F. Reboul, Khalid Mahmood, James C. Whisstock, Michelle A. Dunstone, Predicting
@@ -136,12 +137,12 @@ foA.close()
 # place backbone atoms w/ bbq
 bbA = ''
 prefix = ''
-if os.system(f"source {RUN_BBQ_SH} "+outpdb) == 0:
+
+# run BBQ
+if os.system(f"java apps.BBQ -ip="+outpdb) == 0:
     bbA = outpdb.split('.pdb')[0]+'-bb.pdb'
-elif os.system(f"bash {RUN_BBQ_SH} "+outpdb) == 0:
-    bbA = outpdb.split('.pdb')[0]+'_rebuilt.pdb'
 if not os.path.exists(bbA):
-    print(f'Failed to create backbone using {RUN_BBQ_SH}')
+    print(f'Failed to create backbone using BBQ')
     sys.exit(1)
 
 prefix = bbA[0:-4]
