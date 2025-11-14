@@ -17,7 +17,7 @@ home = str(Path.home())
 
 # EDIT THE FOLLOWING TO POINT TO YOUR SPECIFIC PATHS
 INPAINT_PY = "/software/containers/SE3nv.sif "+home+"/src/proteininpainting/inpaint.py"
-RUN_INFERENCE_PY = "/software/containers/RF_diffusion.sif /projects/ml/rf_diffusion/run_inference.py"
+RUN_INFERENCE_PY = "/software/containers/SE3nv.sif /projects/ml/rf_diffusion/run_inference.py"
 
 ##
 ##
@@ -83,7 +83,7 @@ partial_T = args.diffusion_partial_T #partial_T value for partial diffusion
 
 print(args)
 
-init('-detect_disulf false -out::file::renumber_pdb -in::ignore_unrecognized_res -in::ignore_waters')
+init('-max_kic_build_attempts 100 -detect_disulf false -out::file::renumber_pdb -in::ignore_unrecognized_res -in::ignore_waters')
 
 outpdb = f'barrelCylinder_n{n}_S{S}_nres{nres}_b{b}_dtw{args.dtw}_looplen{args.looplen}_terminilen{args.terminilen}_cylinder.pdb' 
 
@@ -122,12 +122,13 @@ foA = open(outpdb,'w')
 resi = 1
 atomi = 2
 chaini = 0
+chain_ids = 'ABCDEFGHIJKLMNOPQSTUVWXYZ'
 for i in range(len(coor)):
     coor_strand = coor[i]
     if args.antiparallel and i%2 == 0: coor_strand.reverse() 
     for j in range(len(coor_strand)):
         (x,y,z,sign) = coor_strand[j]
-        foA.write("ATOM  %5d  CA  %3s %1s%4d    %8.3f%8.3f%8.3f  1.00  0.00           %1d\n" % (atomi,"VAL",'A',resi,x,y,z,sign))
+        foA.write("ATOM  %5d  CA  %3s %1s%4d    %8.3f%8.3f%8.3f  1.00  0.00           %1d\n" % (atomi,"VAL",chain_ids[chaini],resi,x,y,z,sign))
         resi += 1	
         atomi += 4
     chaini += 1
@@ -179,6 +180,7 @@ for i in range(1,n):  # strands
         inserted += 1
     cutpoint = previous+looplen
     loop = protocols.loops.Loop(previous, cutpoint+1, cutpoint, 0.0, True)
+    loop.set_extended( True )
     loops.add_loop(loop)
     protocols.loops.set_single_loop_fold_tree(pose, loop)
     # extend loops before closing
